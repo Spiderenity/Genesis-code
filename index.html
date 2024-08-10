@@ -30,7 +30,6 @@
         }
         .tooltip .tooltiptext {
             visibility: hidden;
-            width: auto; /* Allow tooltip width to adjust based on content */
             max-width: 250px;
             background-color: #555;
             color: #fff;
@@ -44,22 +43,20 @@
             transform: translateX(-50%);
             opacity: 0;
             transition: opacity 0.3s;
-            white-space: normal; /* Allow text to wrap */
-            word-wrap: break-word; /* Handle long words */
-            line-height: 1.5; /* Ensure multiple lines can be shown */
+            white-space: nowrap; /* Display text on a single line */
         }
         .tooltip:hover .tooltiptext {
             visibility: visible;
             opacity: 1;
         }
         #passwordInput {
-            display: none;
             margin-top: 10px;
         }
         #passwordInput input {
             font-family: 'Noto Serif KR', serif;
             font-size: 16px;
             padding: 5px;
+            width: 100%;
         }
         #resultMessage {
             margin-top: 10px;
@@ -78,7 +75,7 @@
     <p id="content"></p>
 </div>
 
-<p id="genesisText" onclick="showPasswordInput()">제네시스 감염 여부</p>
+<p id="genesisText">제네시스 감염 여부</p>
 
 <div id="passwordInput">
     <input type="text" id="password" placeholder="비밀번호를 입력하세요">
@@ -102,35 +99,29 @@
         if (page === '이안') {
             contentElement.innerHTML = `
                 성별: 여<br>나이: 29<br>파형: <span class="tooltip">녹색❔
-                    <span class="tooltiptext">이 파형의 주인은 가장 안정된 영적 능력을 가진 것으로 간주된다</span>
+                    <span class="tooltiptext">안정된 영적 능력</span>
                 </span><br>
                 거주지: <span class="tooltip">울랄룸❔
-                    <span class="tooltiptext">정보 및 기술의 중심지로, 새로운 기술 개발과 법적 틀을 통합하는 데 있어 가장 높은 효율을 자랑한다</span>
+                    <span class="tooltiptext">정보 및 기술의 중심지</span>
                 </span>
             `;
             genesisText.setAttribute('data-password', 'uninfected');
-            genesisText.setAttribute('data-additional', '추가적인 정보가 필요할 때 여기로 오세요.');
         } else if (page === '동하') {
             contentElement.innerHTML = `
                 성별: 여<br>나이: 19<br>파형: <span class="tooltip">금색❔
-                    <span class="tooltiptext">이 파형은 역사적으로 예지 능력을 가진 왕실 가문과 관련이 있다</span>
+                    <span class="tooltiptext">예지 능력을 가진 왕실 가문</span>
                 </span><br>
                 거주지: <span class="tooltip">울랄룸❔
-                    <span class="tooltiptext">정보 및 기술의 중심지로, 새로운 기술 개발과 법적 틀을 통합하는 데 있어 가장 높은 효율을 자랑한다</span>
+                    <span class="tooltiptext">정보 및 기술의 중심지</span>
                 </span>
             `;
             genesisText.setAttribute('data-password', 'uninfected');
-            genesisText.setAttribute('data-additional', '이곳에 대한 더 많은 정보를 원하시면 확인하세요.');
         } else {
             contentElement.innerHTML = `
                 오류: 잘못된 URL입니다.<br>정확한 링크를 확인해주세요.
             `;
             genesisText.style.display = 'none'; // Hide the Genesis section if there's an error
         }
-    }
-
-    function showPasswordInput() {
-        document.getElementById('passwordInput').style.display = 'block';
     }
 
     function checkPassword() {
