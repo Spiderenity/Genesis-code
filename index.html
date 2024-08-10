@@ -84,19 +84,17 @@
 <p id="additionalMessage"></p>
 
 <script>
-    function getURLSegment() {
-        // Split the URL to separate the path from the query string
-        const urlParts = window.location.pathname.split('/');
-        const lastSegment = decodeURIComponent(urlParts[urlParts.length - 1]);
-        return lastSegment;
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
     }
 
     function displayContentBasedOnURL() {
-        const lastSegment = getURLSegment();
+        const page = getQueryParam('page');
         const contentElement = document.getElementById('content');
         const genesisText = document.getElementById('genesisText');
 
-        if (lastSegment === '이안') {
+        if (page === '이안') {
             contentElement.innerHTML = `
                 성별: 여<br>나이: 29<br>파형: <span class="tooltip">녹색❔
                     <span class="tooltiptext">이 파형의 주인은 가장 안정된 영적 능력을 가진 것으로 간주된다</span>
@@ -106,7 +104,7 @@
                 </span>
             `;
             genesisText.setAttribute('data-password', 'uninfected');
-        } else if (lastSegment === '동하') {
+        } else if (page === '동하') {
             contentElement.innerHTML = `
                 성별: 여<br>나이: 19<br>파형: <span class="tooltip">금색❔
                     <span class="tooltiptext">이 파형은 역사적으로 예지 능력을 가진 왕실 가문과 관련이 있다</span>
@@ -118,7 +116,7 @@
             genesisText.setAttribute('data-password', 'uninfected');
         } else {
             contentElement.innerHTML = `
-                오류: 잘못된 URL입니다!<br>정확한 링크를 확인해주세요.
+                오류: 잘못된 URL입니다.<br>정확한 링크를 확인해주세요.
             `;
             genesisText.style.display = 'none'; // Hide the Genesis section if there's an error
         }
