@@ -84,16 +84,17 @@
 <p id="additionalMessage"></p>
 
 <script>
-    function getURL() {
-        return window.location.href;
+    function getURLSegment() {
+        const urlSegments = window.location.pathname.split('/');
+        return decodeURIComponent(urlSegments[urlSegments.length - 1]);
     }
 
     function displayContentBasedOnURL() {
-        const url = decodeURIComponent(getURL());
+        const lastSegment = getURLSegment();
         const contentElement = document.getElementById('content');
         const genesisText = document.getElementById('genesisText');
 
-        if (url.includes('이안')) { // "이안"
+        if (lastSegment === '이안') {
             contentElement.innerHTML = `
                 성별: 여<br>나이: 29<br>파형: <span class="tooltip">녹색❔
                     <span class="tooltiptext">이 파형의 주인은 가장 안정된 영적 능력을 가진 것으로 간주된다</span>
@@ -103,7 +104,7 @@
                 </span>
             `;
             genesisText.setAttribute('data-password', 'uninfected');
-        } else if (url.includes('동하')) { // "동하"
+        } else if (lastSegment === '동하') {
             contentElement.innerHTML = `
                 성별: 여<br>나이: 19<br>파형: <span class="tooltip">금색❔
                     <span class="tooltiptext">이 파형은 역사적으로 예지 능력을 가진 왕실 가문과 관련이 있다</span>
