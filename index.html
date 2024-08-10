@@ -51,12 +51,23 @@
         }
         #passwordInput {
             margin-top: 10px;
+            text-align: center; /* Center the input and button */
         }
         #passwordInput input {
             font-family: 'Noto Serif KR', serif;
             font-size: 16px;
             padding: 5px;
-            width: 100%;
+            width: 80%; /* Make the input box a bit smaller and centered */
+            max-width: 300px; /* Restrict the maximum width */
+            box-sizing: border-box;
+        }
+        #passwordInput button {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 16px;
+            padding: 5px 10px;
+            margin-top: 10px;
+            width: auto;
+            cursor: pointer;
         }
         #resultMessage {
             margin-top: 10px;
@@ -66,6 +77,9 @@
             margin-top: 5px;
             color: #4a86e8;
             white-space: pre-line;
+        }
+        #genesisText {
+            margin-top: 20px;
         }
     </style>
 </head>
