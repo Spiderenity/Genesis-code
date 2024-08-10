@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 16px;
+            color: #4a86e8;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            flex-direction: column;
+        }
+        .text-container {
+            line-height: 1.5;
+            max-height: 100%;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            max-width: 80vw;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        #passwordInput {
+            display: none;
+            margin-top: 10px;
+        }
+        #passwordInput input {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 16px;
+            padding: 5px;
+        }
+        #resultMessage {
+            margin-top: 10px;
+            color: #4a86e8;
+        }
+        #additionalMessage {
+            margin-top: 5px;
+            color: #4a86e8;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+
+<div class="text-container">
+    <p id="content"></p>
+</div>
+
+<p id="genesisText" onclick="showPasswordInput()">제네시스 감염 여부</p>
+
+<div id="passwordInput">
+    <input type="text" id="password" placeholder="비밀번호를 입력하세요">
+    <button onclick="checkPassword()">확인</button>
+</div>
+
+<p id="resultMessage"></p>
+<p id="additionalMessage"></p>
+
+<script>
+    function getURL() {
+        return window.location.href;
+    }
+
+    function displayContentBasedOnURL() {
+        const url = getURL();
+        const contentElement = document.getElementById('content');
+        const genesisText = document.getElementById('genesisText');
+
+        if (url.includes('%EC%9D%B4%EC%95%88')) { // "이안"
+            contentElement.innerHTML = `
+                성별: 여<br>나이: 29<br>파형: <span class="tooltip">녹색❔
+                    <span class="tooltiptext">이 파형의 주인은 가장 안정된 영적 능력을 가진 것으로 간주된다</span>
+                </span><br>
+                거주지: <span class="tooltip">울랄룸❔
+                    <span class="tooltiptext">정보 및 기술의 중심지로, 새로운 기술 개발과 법적 틀을 통합하는 데 있어 가장 높은 효율을 자랑한다</span>
+                </span>
+            `;
+            genesisText.setAttribute('data-password', 'uninfected');
+        } else if (url.includes('%EB%8F%99%ED%95%98')) { // "동하"
+            contentElement.innerHTML = `
+                성별: 여<br>나이: 19<br>파형: <span class="tooltip">금색❔
+                    <span class="tooltiptext">이 파형은 역사적으로 예지 능력을 가진 왕실 가문과 관련이 있다</span>
+                </span><br>
+                거주지: <span class="tooltip">울랄룸❔
+                    <span class="tooltiptext">정보 및 기술의 중심지로, 새로운 기술 개발과 법적 틀을 통합하는 데 있어 가장 높은 효율을 자랑한다</span>
+                </span>
+            `;
+            genesisText.setAttribute('data-password', 'uninfected');
+        } else {
+            contentElement.innerHTML = `
+                오류: 잘못된 URL입니다.<br>정확한 링크를 확인해주세요.
+            `;
+            genesisText.style.display = 'none'; // Hide the Genesis section if there's an error
+        }
+    }
+
+    function showPasswordInput() {
+        document.getElementById('passwordInput').style.display = 'block';
+    }
+
+    function checkPassword() {
+        const input = document.getElementById('password').value.trim().toUpperCase();
+        const correctPassword = 'LOAD"*",8,1';
+        const resultMessage = document.getElementById('resultMessage');
+        const genesisStatus = document.getElementById('genesisText').getAttribute('data-password');
+        const additionalMessage = document.getElementById('additionalMessage');
+
+        if (input === correctPassword.toUpperCase()) {
+            if (genesisStatus === 'infected') {
+                resultMessage.textContent = '감염';
+                resultMessage.style.color = '#ff0000'; // Change color to red for "감염"
+
+                const additionalText = document.getElementById('genesisText').getAttribute('data-additional');
+                displayAdditionalMessage(additionalText);
+            } else {
+                resultMessage.textContent = '미감염';
+            }
+        } else {
+            alert('비밀번호가 틀렸습니다.');
+        }
+    }
+
+    function displayAdditionalMessage(text) {
+        const messageElement = document.getElementById('additionalMessage');
+        messageElement.innerText = text;
+
+        let chars = text.split('');
+        let indices = Array.from({ length: chars.length }, (_, i) => i);
+        shuffle(indices); // Shuffle the indices to get random order
+
+        indices.forEach((index, i) => {
+            setTimeout(() => {
+                chars[index] = `<span style="color: #ff0000;">${chars[index]}</span>`;
+                messageElement.innerHTML = chars.join('');
+            }, i * 100); // Adjust the speed of color change here
+        });
+    }
+
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // Call the function when the page loads
+    displayContentBasedOnURL();
+</script>
+
+</body>
+</html>
