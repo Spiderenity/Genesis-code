@@ -12,17 +12,18 @@
             padding: 0;
             background-color: #fff;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
-            min-height: 100vh; /* Ensure the content fits the screen */
-            text-align: center;
             flex-direction: column;
-            overflow: hidden; /* Prevent unwanted scroll bars */
+            min-height: 100vh;
+            text-align: center;
+            overflow: hidden;
         }
         .text-container {
             line-height: 1.5;
-            max-height: 100%;
-            padding: 0 10px; /* Add padding to prevent text from touching the edges */
+            max-width: 100%;
+            padding: 0 10px;
+            box-sizing: border-box;
         }
         .tooltip {
             position: relative;
@@ -39,12 +40,12 @@
             padding: 5px;
             position: absolute;
             z-index: 1;
-            bottom: 125%; 
+            bottom: 125%;
             left: 50%;
             transform: translateX(-50%);
             opacity: 0;
             transition: opacity 0.3s;
-            white-space: nowrap; /* Display text on a single line */
+            white-space: nowrap;
         }
         .tooltip:hover .tooltiptext {
             visibility: visible;
@@ -52,15 +53,15 @@
         }
         #passwordInput {
             margin-top: 10px;
-            text-align: center; /* Center the input and button */
-            width: 100%; /* Ensure it doesn't overflow on mobile */
+            text-align: center;
+            width: 100%;
         }
         #passwordInput input {
             font-family: 'Noto Serif KR', serif;
             font-size: 16px;
             padding: 5px;
-            width: 80%; /* Make the input box smaller and centered */
-            max-width: 300px; /* Restrict the maximum width */
+            width: 80%;
+            max-width: 300px;
             box-sizing: border-box;
         }
         #passwordInput button {
@@ -82,18 +83,19 @@
         }
         #genesisText {
             margin-top: 20px;
-            font-size: 24px; /* Increase font size for better visibility */
+            font-size: 24px;
             font-weight: bold;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
 
+<p id="genesisText">제네시스 감염 여부</p>
+
 <div class="text-container">
     <p id="content"></p>
 </div>
-
-<p id="genesisText">제네시스 감염 여부</p>
 
 <div id="passwordInput">
     <input type="text" id="password" placeholder="비밀번호를 입력하세요">
@@ -138,7 +140,7 @@
             contentElement.innerHTML = `
                 오류: 잘못된 URL입니다.<br>정확한 링크를 확인해주세요.
             `;
-            genesisText.style.display = 'none'; // Hide the Genesis section if there's an error
+            genesisText.style.display = 'none';
         }
     }
 
@@ -152,7 +154,7 @@
         if (input === correctPassword.toUpperCase()) {
             if (genesisStatus === 'infected') {
                 resultMessage.textContent = '감염';
-                resultMessage.style.color = '#ff0000'; // Change color to red for "감염"
+                resultMessage.style.color = '#ff0000';
 
                 const additionalText = document.getElementById('genesisText').getAttribute('data-additional');
                 displayAdditionalMessage(additionalText);
@@ -170,13 +172,13 @@
 
         let chars = text.split('');
         let indices = Array.from({ length: chars.length }, (_, i) => i);
-        shuffle(indices); // Shuffle the indices to get random order
+        shuffle(indices);
 
         indices.forEach((index, i) => {
             setTimeout(() => {
                 chars[index] = `<span style="color: #ff0000;">${chars[index]}</span>`;
                 messageElement.innerHTML = chars.join('');
-            }, i * 100); // Adjust the speed of color change here
+            }, i * 100);
         });
     }
 
