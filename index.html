@@ -26,7 +26,6 @@
             box-sizing: border-box;
             flex-grow: 1;
             overflow-y: auto; /* Enable scrolling if content overflows vertically */
-            margin-top: 20px;
             scrollbar-width: none; /* Hide scrollbar in Firefox */
             -ms-overflow-style: none;  /* Hide scrollbar in IE and Edge */
         }
@@ -60,7 +59,7 @@
             opacity: 1;
         }
         #genesisSection {
-            margin-top: 20px;
+            margin-top: 10px; /* Reduced margin to bring closer to content */
             font-size: 24px;
             font-weight: bold;
             display: flex;
@@ -69,10 +68,9 @@
             width: 100%;
             padding: 0 10px;
             box-sizing: border-box;
-            margin-bottom: 20px; /* Add margin to separate from content */
         }
         #passwordInput {
-            margin-top: 10px;
+            margin-top: 5px; /* Reduced margin to bring closer to genesis text */
             text-align: center;
             width: 100%;
         }
@@ -88,26 +86,18 @@
             font-family: 'Noto Serif KR', serif;
             font-size: 16px;
             padding: 5px 10px;
-            margin-top: 10px;
+            margin-top: 5px; /* Reduced margin to bring closer to input field */
             width: auto;
             cursor: pointer;
         }
         #resultMessage {
-            margin-top: 10px;
+            margin-top: 5px; /* Reduced margin to bring closer to password button */
             color: #4a86e8;
         }
         #additionalMessage {
             margin-top: 5px;
             color: #4a86e8;
             white-space: pre-line;
-        }
-
-        /* Media Query for Larger Screens */
-        @media (min-width: 768px) {
-            #genesisSection {
-                margin-top: 40px;
-                margin-bottom: 40px;
-            }
         }
     </style>
 </head>
@@ -131,7 +121,7 @@
 <script>
     function getHashParam(param) {
         const hashParams = new URLSearchParams(window.location.hash.substring(1));
-        return hashParams.get(param);
+        return urlParams.get(param);
     }
 
     function displayContentBasedOnHash() {
