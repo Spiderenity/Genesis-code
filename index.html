@@ -85,8 +85,10 @@
 
 <script>
     function getURLSegment() {
-        const urlSegments = window.location.pathname.split('/');
-        return decodeURIComponent(urlSegments[urlSegments.length - 1]);
+        // Split the URL to separate the path from the query string
+        const urlParts = window.location.pathname.split('/');
+        const lastSegment = decodeURIComponent(urlParts[urlParts.length - 1]);
+        return lastSegment;
     }
 
     function displayContentBasedOnURL() {
@@ -116,7 +118,7 @@
             genesisText.setAttribute('data-password', 'uninfected');
         } else {
             contentElement.innerHTML = `
-                오류: 잘못된 URL입니다.<br>정확한 링크를 확인해주세요.
+                오류: 잘못된 URL입니다!<br>정확한 링크를 확인해주세요.
             `;
             genesisText.style.display = 'none'; // Hide the Genesis section if there's an error
         }
