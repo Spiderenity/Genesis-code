@@ -121,7 +121,7 @@
 <script>
     function getHashParam(param) {
         const hashParams = new URLSearchParams(window.location.hash.substring(1));
-        return urlParams.get(param);
+        return hashParams.get(param);
     }
 
     function displayContentBasedOnHash() {
