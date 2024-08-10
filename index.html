@@ -12,7 +12,7 @@
             padding: 0;
             background-color: #fff;
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
             flex-direction: column;
             min-height: 100vh;
@@ -51,6 +51,15 @@
             visibility: visible;
             opacity: 1;
         }
+        #genesisSection {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         #passwordInput {
             margin-top: 10px;
             text-align: center;
@@ -81,25 +90,20 @@
             color: #4a86e8;
             white-space: pre-line;
         }
-        #genesisText {
-            margin-top: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 <body>
-
-<p id="genesisText">제네시스 감염 여부</p>
 
 <div class="text-container">
     <p id="content"></p>
 </div>
 
-<div id="passwordInput">
-    <input type="text" id="password" placeholder="비밀번호를 입력하세요">
-    <button onclick="checkPassword()">확인</button>
+<div id="genesisSection">
+    <p id="genesisText">제네시스 감염 여부</p>
+    <div id="passwordInput">
+        <input type="text" id="password" placeholder="비밀번호를 입력하세요">
+        <button onclick="checkPassword()">확인</button>
+    </div>
 </div>
 
 <p id="resultMessage"></p>
