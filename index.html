@@ -22,6 +22,7 @@
         .text-container {
             line-height: 1.5;
             max-height: 100%;
+            padding: 0 10px; /* Add padding to prevent text from touching the edges */
         }
         .tooltip {
             position: relative;
@@ -52,12 +53,13 @@
         #passwordInput {
             margin-top: 10px;
             text-align: center; /* Center the input and button */
+            width: 100%; /* Ensure it doesn't overflow on mobile */
         }
         #passwordInput input {
             font-family: 'Noto Serif KR', serif;
             font-size: 16px;
             padding: 5px;
-            width: 80%; /* Make the input box a bit smaller and centered */
+            width: 80%; /* Make the input box smaller and centered */
             max-width: 300px; /* Restrict the maximum width */
             box-sizing: border-box;
         }
@@ -80,6 +82,8 @@
         }
         #genesisText {
             margin-top: 20px;
+            font-size: 24px; /* Increase font size for better visibility */
+            font-weight: bold;
         }
     </style>
 </head>
@@ -112,20 +116,20 @@
 
         if (page === '이안') {
             contentElement.innerHTML = `
-                성별: 여<br>나이: 29<br>파형: <span class="tooltip">녹색❔
+                성별: 여<br>나이: 29<br>파형: <span class="tooltip">녹색
                     <span class="tooltiptext">안정된 영적 능력</span>
                 </span><br>
-                거주지: <span class="tooltip">울랄룸❔
+                거주지: <span class="tooltip">울랄룸
                     <span class="tooltiptext">정보 및 기술의 중심지</span>
                 </span>
             `;
             genesisText.setAttribute('data-password', 'uninfected');
         } else if (page === '동하') {
             contentElement.innerHTML = `
-                성별: 여<br>나이: 19<br>파형: <span class="tooltip">금색❔
+                성별: 여<br>나이: 19<br>파형: <span class="tooltip">금색
                     <span class="tooltiptext">예지 능력을 가진 왕실 가문</span>
                 </span><br>
-                거주지: <span class="tooltip">울랄룸❔
+                거주지: <span class="tooltip">울랄룸
                     <span class="tooltiptext">정보 및 기술의 중심지</span>
                 </span>
             `;
