@@ -27,6 +27,11 @@
             flex-grow: 1;
             overflow-y: auto; /* Enable scrolling if content overflows vertically */
             margin-top: 20px;
+            scrollbar-width: none; /* Hide scrollbar in Firefox */
+            -ms-overflow-style: none;  /* Hide scrollbar in IE and Edge */
+        }
+        .text-container::-webkit-scrollbar {
+            display: none; /* Hide scrollbar in Chrome, Safari, and Opera */
         }
         .tooltip {
             position: relative;
@@ -64,6 +69,7 @@
             width: 100%;
             padding: 0 10px;
             box-sizing: border-box;
+            margin-bottom: 20px; /* Add margin to separate from content */
         }
         #passwordInput {
             margin-top: 10px;
@@ -99,16 +105,16 @@
 </head>
 <body>
 
+<div class="text-container">
+    <p id="content"></p>
+</div>
+
 <div id="genesisSection">
     <p id="genesisText">제네시스 감염 여부</p>
     <div id="passwordInput">
         <input type="text" id="password" placeholder="비밀번호를 입력하세요">
         <button onclick="checkPassword()">확인</button>
     </div>
-</div>
-
-<div class="text-container">
-    <p id="content"></p>
 </div>
 
 <p id="resultMessage"></p>
