@@ -14,9 +14,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh; /* Ensure the content fits the screen */
             text-align: center;
             flex-direction: column;
+            overflow: hidden; /* Prevent unwanted scroll bars */
         }
         .text-container {
             line-height: 1.5;
@@ -29,6 +30,7 @@
         }
         .tooltip .tooltiptext {
             visibility: hidden;
+            width: auto; /* Allow tooltip width to adjust based on content */
             max-width: 250px;
             background-color: #555;
             color: #fff;
@@ -39,15 +41,34 @@
             z-index: 1;
             bottom: 125%; 
             left: 50%;
-            margin-left: -125px;
+            transform: translateX(-50%);
             opacity: 0;
             transition: opacity 0.3s;
-            white-space: nowrap;
-            display: inline-block;
+            white-space: normal; /* Allow text to wrap */
+            word-wrap: break-word; /* Handle long words */
+            line-height: 1.5; /* Ensure multiple lines can be shown */
         }
         .tooltip:hover .tooltiptext {
             visibility: visible;
             opacity: 1;
+        }
+        #passwordInput {
+            display: none;
+            margin-top: 10px;
+        }
+        #passwordInput input {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 16px;
+            padding: 5px;
+        }
+        #resultMessage {
+            margin-top: 10px;
+            color: #4a86e8;
+        }
+        #additionalMessage {
+            margin-top: 5px;
+            color: #4a86e8;
+            white-space: pre-line;
         }
     </style>
 </head>
@@ -56,6 +77,16 @@
 <div class="text-container">
     <p id="content"></p>
 </div>
+
+<p id="genesisText" onclick="showPasswordInput()">제네시스 감염 여부</p>
+
+<div id="passwordInput">
+    <input type="text" id="password" placeholder="비밀번호를 입력하세요">
+    <button onclick="checkPassword()">확인</button>
+</div>
+
+<p id="resultMessage"></p>
+<p id="additionalMessage"></p>
 
 <script>
     function getHashParam(param) {
@@ -66,6 +97,7 @@
     function displayContentBasedOnHash() {
         const page = getHashParam('page');
         const contentElement = document.getElementById('content');
+        const genesisText = document.getElementById('genesisText');
 
         if (page === '이안') {
             contentElement.innerHTML = `
@@ -76,6 +108,8 @@
                     <span class="tooltiptext">정보 및 기술의 중심지로, 새로운 기술 개발과 법적 틀을 통합하는 데 있어 가장 높은 효율을 자랑한다</span>
                 </span>
             `;
+            genesisText.setAttribute('data-password', 'uninfected');
+            genesisText.setAttribute('data-additional', '추가적인 정보가 필요할 때 여기로 오세요.');
         } else if (page === '동하') {
             contentElement.innerHTML = `
                 성별: 여<br>나이: 19<br>파형: <span class="tooltip">금색❔
@@ -85,11 +119,64 @@
                     <span class="tooltiptext">정보 및 기술의 중심지로, 새로운 기술 개발과 법적 틀을 통합하는 데 있어 가장 높은 효율을 자랑한다</span>
                 </span>
             `;
+            genesisText.setAttribute('data-password', 'uninfected');
+            genesisText.setAttribute('data-additional', '이곳에 대한 더 많은 정보를 원하시면 확인하세요.');
         } else {
             contentElement.innerHTML = `
                 오류: 잘못된 URL입니다.<br>정확한 링크를 확인해주세요.
             `;
+            genesisText.style.display = 'none'; // Hide the Genesis section if there's an error
         }
+    }
+
+    function showPasswordInput() {
+        document.getElementById('passwordInput').style.display = 'block';
+    }
+
+    function checkPassword() {
+        const input = document.getElementById('password').value.trim().toUpperCase();
+        const correctPassword = 'LOAD"*",8,1';
+        const resultMessage = document.getElementById('resultMessage');
+        const genesisStatus = document.getElementById('genesisText').getAttribute('data-password');
+        const additionalMessage = document.getElementById('additionalMessage');
+
+        if (input === correctPassword.toUpperCase()) {
+            if (genesisStatus === 'infected') {
+                resultMessage.textContent = '감염';
+                resultMessage.style.color = '#ff0000'; // Change color to red for "감염"
+
+                const additionalText = document.getElementById('genesisText').getAttribute('data-additional');
+                displayAdditionalMessage(additionalText);
+            } else {
+                resultMessage.textContent = '미감염';
+            }
+        } else {
+            alert('비밀번호가 틀렸습니다.');
+        }
+    }
+
+    function displayAdditionalMessage(text) {
+        const messageElement = document.getElementById('additionalMessage');
+        messageElement.innerText = text;
+
+        let chars = text.split('');
+        let indices = Array.from({ length: chars.length }, (_, i) => i);
+        shuffle(indices); // Shuffle the indices to get random order
+
+        indices.forEach((index, i) => {
+            setTimeout(() => {
+                chars[index] = `<span style="color: #ff0000;">${chars[index]}</span>`;
+                messageElement.innerHTML = chars.join('');
+            }, i * 100); // Adjust the speed of color change here
+        });
+    }
+
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
 
     displayContentBasedOnHash();
