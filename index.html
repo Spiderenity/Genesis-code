@@ -89,11 +89,11 @@
     }
 
     function displayContentBasedOnURL() {
-        const url = getURL();
+        const url = decodeURIComponent(getURL());
         const contentElement = document.getElementById('content');
         const genesisText = document.getElementById('genesisText');
 
-        if (url.includes('%EC%9D%B4%EC%95%88')) { // "이안"
+        if (url.includes('이안')) { // "이안"
             contentElement.innerHTML = `
                 성별: 여<br>나이: 29<br>파형: <span class="tooltip">녹색❔
                     <span class="tooltiptext">이 파형의 주인은 가장 안정된 영적 능력을 가진 것으로 간주된다</span>
@@ -103,7 +103,7 @@
                 </span>
             `;
             genesisText.setAttribute('data-password', 'uninfected');
-        } else if (url.includes('%EB%8F%99%ED%95%98')) { // "동하"
+        } else if (url.includes('동하')) { // "동하"
             contentElement.innerHTML = `
                 성별: 여<br>나이: 19<br>파형: <span class="tooltip">금색❔
                     <span class="tooltiptext">이 파형은 역사적으로 예지 능력을 가진 왕실 가문과 관련이 있다</span>
