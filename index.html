@@ -29,7 +29,7 @@
         }
         .tooltip .tooltiptext {
             visibility: hidden;
-            max-width: 250px; 
+            max-width: 250px;
             background-color: #555;
             color: #fff;
             text-align: center;
@@ -37,13 +37,13 @@
             padding: 5px;
             position: absolute;
             z-index: 1;
-            bottom: 125%; /* Position the tooltip above the text */
+            bottom: 125%; 
             left: 50%;
             margin-left: -125px;
             opacity: 0;
             transition: opacity 0.3s;
-            white-space: normal; /* Ensure text wraps correctly */
-            word-wrap: break-word; /* Handle long words */
+            white-space: nowrap;
+            display: inline-block;
         }
         .tooltip:hover .tooltiptext {
             visibility: visible;
@@ -58,13 +58,13 @@
 </div>
 
 <script>
-    function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
+    function getHashParam(param) {
+        const hashParams = new URLSearchParams(window.location.hash.substring(1));
+        return hashParams.get(param);
     }
 
-    function displayContentBasedOnURL() {
-        const page = getQueryParam('page');
+    function displayContentBasedOnHash() {
+        const page = getHashParam('page');
         const contentElement = document.getElementById('content');
 
         if (page === '이안') {
@@ -92,8 +92,7 @@
         }
     }
 
-    // Call the function when the page loads
-    displayContentBasedOnURL();
+    displayContentBasedOnHash();
 </script>
 
 </body>
